@@ -1,0 +1,711 @@
+<style>
+    /* تحديد المتغيرات عشان ما نأثرش على باقي الموقع */
+    .eitry-tracking-system {
+        --brand: #ceab75;
+        --brand-light: #fdfaf5;
+        --brand-dark: #b5925d;
+        --text-primary: #111111;
+        --text-secondary: #555555;
+        --text-muted: #999999;
+        --bg-color: #fcfbf9;
+        --surface: #ffffff;
+        --border: #eaeaea;
+        --danger-bg: #fff5f5;
+        --danger-text: #c53030;
+        --danger-border: #feb2b2;
+
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        font-family: 'Noto Kufi Arabic', sans-serif;
+        direction: rtl;
+        padding: 1rem;
+    }
+
+    /* ── BREADCRUMB ── */
+    .eitry-tracking-system .breadcrumb {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        font-size: 1rem;
+    }
+
+    .eitry-tracking-system .bc-right {
+        color: var(--text-secondary);
+        text-decoration: none;
+    }
+
+    .eitry-tracking-system .bc-left {
+        color: var(--brand);
+        font-weight: 700;
+    }
+
+    /* ── HERO SECTION ── */
+    .eitry-tracking-system .tracking-hero {
+        background: var(--bg-color);
+        border-radius: 8px;
+        /* ممكن تخليها 0 لو عايز المربع حاد */
+        padding: 4rem 1rem 6rem;
+        text-align: center;
+    }
+
+    .eitry-tracking-system .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #f4eee3;
+        color: var(--brand-dark);
+        font-size: 0.95rem;
+        font-weight: 600;
+        padding: 8px 24px;
+        border-radius: 100px;
+        margin-bottom: 1.5rem;
+    }
+
+    .eitry-tracking-system .badge-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--brand);
+        border-radius: 50%;
+        animation: trackPulse 1.6s infinite;
+    }
+
+    .eitry-tracking-system .hero-title {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+    }
+
+    .eitry-tracking-system .hero-title span {
+        color: var(--brand);
+    }
+
+    .eitry-tracking-system .hero-subtitle {
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        color: var(--text-secondary);
+        margin-bottom: 0;
+    }
+
+    /* ── SEARCH CARD (White Box) ── */
+    .eitry-tracking-system .search-container {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.25rem;
+        max-width: 850px;
+        margin: -3.5rem auto 2rem;
+        /* بيرفع المربع الأبيض لفوق عشان يغطي جزء من المربع البيج */
+        position: relative;
+        z-index: 10;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+    }
+
+    .eitry-tracking-system .input-group {
+        display: flex;
+        gap: 12px;
+    }
+
+    .eitry-tracking-system .input-group input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        font-family: inherit;
+        color: var(--text-primary);
+        text-align: right;
+    }
+
+    .eitry-tracking-system .input-group input::placeholder {
+        color: var(--text-muted);
+    }
+
+    .eitry-tracking-system .track-btn {
+        background: var(--brand);
+        color: #fff;
+        border: none;
+        padding: 0 35px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-family: inherit;
+        font-size: 1.05rem;
+        cursor: pointer;
+        min-height: 55px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all .2s;
+    }
+
+    .eitry-tracking-system .track-btn:hover {
+        background: var(--brand-dark);
+    }
+
+    .eitry-tracking-system .track-btn:disabled {
+        opacity: .6;
+        cursor: not-allowed;
+    }
+
+    .eitry-tracking-system .spinner {
+        width: 18px;
+        height: 18px;
+        border: 2.5px solid rgba(255, 255, 255, .3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: trackSpin .8s linear infinite;
+        display: none;
+    }
+
+    .eitry-tracking-system .error-box {
+        background: var(--danger-bg);
+        border: 1px solid var(--danger-border);
+        color: var(--danger-text);
+        padding: 12px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1rem;
+        margin-top: 1rem;
+        animation: trackShake .3s ease;
+    }
+
+    /* ── RESULT AREA ── */
+    .eitry-tracking-system .result-area {
+        max-width: 850px;
+        margin: 2rem auto 4rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: clamp(1.5rem, 4vw, 3rem);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+    }
+
+    .eitry-tracking-system .status-banner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 2.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .eitry-tracking-system .status-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f4eee3;
+        color: var(--brand-dark);
+        padding: 8px 20px;
+        border-radius: 100px;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .eitry-tracking-system .order-meta {
+        text-align: left;
+    }
+
+    .eitry-tracking-system .order-meta .order-num {
+        display: block;
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .eitry-tracking-system .order-meta .order-date {
+        display: block;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .eitry-tracking-system .progress-section {
+        margin-bottom: 3rem;
+    }
+
+    .eitry-tracking-system .progress-track-wrap {
+        position: relative;
+        padding: 0 5px;
+    }
+
+    .eitry-tracking-system .progress-rail {
+        position: absolute;
+        top: 26px;
+        right: 8%;
+        left: 8%;
+        height: 6px;
+        background: var(--border);
+        border-radius: 6px;
+    }
+
+    .eitry-tracking-system .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--brand);
+        border-radius: 6px;
+        transition: width 1s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .eitry-tracking-system .steps-row {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        z-index: 2;
+    }
+
+    .eitry-tracking-system .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+    }
+
+    .eitry-tracking-system .step-icon {
+        width: 58px;
+        height: 58px;
+        border: 3px solid var(--border);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--surface);
+        color: var(--text-muted);
+        font-weight: 700;
+        font-size: 1.2rem;
+        transition: all .4s ease;
+    }
+
+    .eitry-tracking-system .step-label {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .eitry-tracking-system .step.done .step-icon,
+    .eitry-tracking-system .step.active .step-icon {
+        background: var(--brand);
+        border-color: var(--brand);
+        color: #fff;
+        box-shadow: 0 8px 20px rgba(206, 171, 117, .3);
+    }
+
+    .eitry-tracking-system .step.active .step-label {
+        color: var(--text-primary);
+        font-weight: 700;
+    }
+
+    /* ── DETAILS CARDS ── */
+    .eitry-tracking-system .details-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-top: 2rem;
+    }
+
+    .eitry-tracking-system .detail-card {
+        background: var(--bg-color);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.25rem;
+    }
+
+    .eitry-tracking-system .dc-label {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+    }
+
+    .eitry-tracking-system .dc-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .eitry-tracking-system .dc-sub {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        margin-top: 4px;
+    }
+
+    /* ── TIMELINE ── */
+    .eitry-tracking-system .timeline {
+        margin-top: 2.5rem;
+        padding-top: 2.5rem;
+        border-top: 1px solid var(--border);
+    }
+
+    .eitry-tracking-system .timeline-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+    }
+
+    .eitry-tracking-system .tl-item {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        padding-bottom: 1.5rem;
+        position: relative;
+    }
+
+    .eitry-tracking-system .tl-item:not(:last-child)::before {
+        content: '';
+        position: absolute;
+        top: 38px;
+        right: 20px;
+        width: 2px;
+        height: calc(100% - 16px);
+        background: var(--border);
+    }
+
+    .eitry-tracking-system .tl-dot {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #f4eee3;
+        border: 2px solid var(--brand);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        z-index: 2;
+    }
+
+    .eitry-tracking-system .tl-dot svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--brand);
+    }
+
+    .eitry-tracking-system .tl-dot.pending-dot {
+        background: var(--surface);
+        border-color: var(--border);
+    }
+
+    .eitry-tracking-system .tl-dot.pending-dot svg {
+        stroke: var(--text-muted);
+    }
+
+    .eitry-tracking-system .tl-content .tl-label {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .eitry-tracking-system .tl-content .tl-time {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-top: 4px;
+    }
+
+    .eitry-tracking-system .hidden {
+        display: none !important;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes trackPulse {
+
+        0%,
+        100% {
+            opacity: 1
+        }
+
+        50% {
+            opacity: .4
+        }
+    }
+
+    @keyframes trackSpin {
+        to {
+            transform: rotate(360deg)
+        }
+    }
+
+    @keyframes trackFadein {
+        from {
+            opacity: 0;
+            transform: translateY(15px)
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0)
+        }
+    }
+
+    @keyframes trackShake {
+
+        0%,
+        100% {
+            transform: translateX(0)
+        }
+
+        30% {
+            transform: translateX(-5px)
+        }
+
+        70% {
+            transform: translateX(5px)
+        }
+    }
+
+    .eitry-tracking-system .animate-in {
+        animation: trackFadein .5s ease forwards;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 768px) {
+        .eitry-tracking-system .input-group {
+            flex-direction: column;
+        }
+
+        .eitry-tracking-system .track-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .eitry-tracking-system .progress-rail {
+            right: 12%;
+            left: 12%;
+        }
+    }
+</style>
+<div class="eitry-tracking-system">
+    <div class="breadcrumb"><a class="bc-right" href="/">الرئيسية</a> <span class="bc-left">عطري هشام شاهين</span></div>
+    <div class="tracking-hero">
+        <div class="hero-badge"><span class="badge-dot"></span> تتبع مباشر للشحنات</div>
+        <h2 class="hero-title">أين طلبك <span>الآن؟</span></h2>
+        <p class="hero-subtitle">أدخل رقم طلبك وتابع رحلة شحنتك خطوة بخطوة في وقت حقيقي</p>
+    </div>
+    <div class="search-container">
+        <div class="input-group">
+            <input autocomplete="off" aria-label="رقم الطلب" placeholder="مثال: #1001 أو 1001" id="order-input" type="text"> 
+            <button id="track-btn" class="track-btn"> 
+                <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="20" width="20">
+                    <circle r="8" cy="11" cx="11"></circle>
+                    <line y2="16.65" x2="16.65" y1="21" x1="21"></line>
+                </svg> 
+                <span id="btn-text">تتبع الطلب</span>
+                <div id="spinner" class="spinner"></div>
+            </button>
+        </div>
+        <div class="error-box hidden" id="error-box">
+            <svg fill="currentColor" viewBox="0 0 20 20" height="20" width="20">
+                <path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" fill-rule="evenodd"></path>
+            </svg> 
+            <span id="error-msg">عذراً، لم نجد طلباً بهذا الرقم. تأكد من الرقم وحاول مجدداً.</span>
+        </div>
+    </div>
+    <div class="result-area hidden" id="result-content">
+        <div class="status-banner">
+            <div class="status-pill"><span class="badge-dot"></span><span id="status-text">...</span></div>
+            <div class="order-meta"><span id="result-order-num" class="order-num"></span> <span id="result-date" class="order-date"></span></div>
+        </div>
+        <div class="progress-section">
+            <div class="progress-track-wrap">
+                <div class="progress-rail">
+                    <div id="prog-fill" class="progress-fill"></div>
+                </div>
+                <div id="steps-row" class="steps-row">
+                    <div data-s="pending" class="step">
+                        <div class="step-icon">١</div>
+                        <span class="step-label">تم الطلب</span>
+                    </div>
+                    <div data-s="processing" class="step">
+                        <div class="step-icon">٢</div>
+                        <span class="step-label">جاري التجهيز</span>
+                    </div>
+                    <div data-s="shipped" class="step">
+                        <div class="step-icon">٣</div>
+                        <span class="step-label">تم الشحن</span>
+                    </div>
+                    <div data-s="delivered" class="step">
+                        <div class="step-icon">٤</div>
+                        <span class="step-label">تم التوصيل</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="details-grid">
+            <div class="detail-card">
+                <div class="dc-label">رقم الطلب</div>
+                <div id="dc-order-num" class="dc-value">—</div>
+            </div>
+            <div class="detail-card">
+                <div class="dc-label">طريقة الاستلام</div>
+                <div id="dc-status" class="dc-value">—</div>
+            </div>
+            <div class="detail-card">
+                <div class="dc-label">تاريخ الطلب</div>
+                <div id="dc-date" class="dc-value">—</div>
+                <div id="dc-time" class="dc-sub"></div>
+            </div>
+            <div class="detail-card">
+                <div class="dc-label">المرحلة الحالية</div>
+                <div id="dc-stage" class="dc-value">—</div>
+                <div id="dc-stage-sub" class="dc-sub"></div>
+            </div>
+        </div>
+        <div class="timeline">
+            <div class="timeline-title">مراحل الطلب</div>
+            <div id="timeline-items"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function() {
+    const API_URL = 'https://eitryadmin.vercel.app/api/track';
+
+    const trackBtn = document.getElementById('track-btn');
+    const orderInput = document.getElementById('order-input');
+    const btnText = document.getElementById('btn-text');
+    const spinner = document.getElementById('spinner');
+    const errorBox = document.getElementById('error-box');
+    const errorMsg = document.getElementById('error-msg');
+    const resultContent = document.getElementById('result-content');
+    
+    const elements = {
+        statusText: document.getElementById('status-text'),
+        resultOrderNum: document.getElementById('result-order-num'),
+        resultDateText: document.getElementById('result-date'),
+        progFill: document.getElementById('prog-fill'),
+        dcOrderNum: document.getElementById('dc-order-num'),
+        dcStatus: document.getElementById('dc-status'),
+        dcDate: document.getElementById('dc-date'),
+        dcTime: document.getElementById('dc-time'),
+        dcStage: document.getElementById('dc-stage'),
+        dcStageSub: document.getElementById('dc-stage-sub'),
+        timelineItems: document.getElementById('timeline-items')
+    };
+
+    // مزامنة المسميات مع لوحة التحكم (Admin)
+    const statusConfig = {
+        'pending': { label: 'قيد الطلب', sub: 'نحن نراجع طلبك الآن', icon: '📝' },
+        'processing': { label: 'جاري التجهيز', sub: 'فريقنا يقوم بتجهير منتجاتك', icon: '📦' },
+        'shipped': { 
+            shipping: { label: 'تم الشحن', sub: 'طلبك في الطريق إليك', icon: '🚚' },
+            pickup: { label: 'جاهز للاستلام', sub: 'يمكنك الآن القدوم للفرع واستلام عطرك', icon: '📍' }
+        },
+        'delivered': { 
+            shipping: { label: 'تم التوصيل', sub: 'وصل طلبك بنجاح، نتمنى أن ينال إعجابك', icon: '🏠' },
+            pickup: { label: 'تم الاستلام من الفرع', sub: 'سعدنا بزيارتك لنا في الفرع، نتمنى لك يوماً سعيداً', icon: '✅' }
+        }
+    };
+
+    const statusOrder = ['pending', 'processing', 'shipped', 'delivered'];
+
+    async function handleTrack() {
+        let orderNum = orderInput.value.trim();
+        if (!orderNum) return;
+        if (!orderNum.startsWith('#') && !isNaN(orderNum)) orderNum = '#' + orderNum;
+
+        errorBox.classList.add('hidden');
+        resultContent.classList.add('hidden');
+        spinner.style.display = 'inline-block';
+        if (btnText) btnText.style.display = 'none';
+        trackBtn.disabled = true;
+        
+        try {
+            const res = await fetch(`${API_URL}?order_number=${encodeURIComponent(orderNum)}`);
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            renderResult(data);
+        } catch (err) {
+            errorBox.classList.remove('hidden');
+            errorMsg.innerText = 'عذراً، لم نجد طلباً بهذا الرقم. تأكد من الرقم وحاول مجدداً.';
+        } finally {
+            spinner.style.display = 'none';
+            if (btnText) btnText.style.display = 'inline';
+            trackBtn.disabled = false;
+        }
+    }
+
+    function renderResult(data) {
+        console.log('Order Data:', data); // للدعم الفني - لمتابعة البيانات المستلمة
+        const isMsg = data.delivery_method?.toUpperCase() === 'PICKUP';
+        const type = isMsg ? 'pickup' : 'shipping';
+        
+        const info = statusConfig[data.status] || { label: data.status, sub: '' };
+        const finalLabel = info[type] ? info[type].label : info.label;
+        const finalSub = info[type] ? info[type].sub : info.sub;
+
+        elements.statusText.innerText = finalLabel;
+        elements.resultOrderNum.innerText = data.order_number;
+        
+        const dateObj = new Date(data.created_at);
+        elements.resultDateText.innerText = dateObj.toLocaleDateString('ar-EG');
+        
+        elements.dcOrderNum.innerText = data.order_number;
+        elements.dcStatus.innerText = isMsg ? 'استلام من الفرع' : 'شحن للمنزل';
+        elements.dcDate.innerText = dateObj.toLocaleDateString('ar-EG');
+        elements.dcTime.innerText = dateObj.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+        elements.dcStage.innerText = finalLabel;
+        elements.dcStageSub.innerText = finalSub;
+
+        const currentIdx = statusOrder.indexOf(data.status);
+        elements.progFill.style.width = `${((currentIdx + 1) / statusOrder.length) * 100}%`;
+
+        // Steps
+        document.querySelectorAll('.step').forEach((step, idx) => {
+            step.classList.remove('active', 'done');
+            const stepLabel = step.querySelector('.step-label');
+            const sKey = statusOrder[idx];
+            if (stepLabel) {
+                const sInfo = statusConfig[sKey];
+                stepLabel.innerText = sInfo[type] ? sInfo[type].label : sInfo.label;
+            }
+            if (idx < currentIdx) step.classList.add('done');
+            if (idx === currentIdx) step.classList.add('active');
+        });
+
+        // Timeline
+        elements.timelineItems.innerHTML = '';
+        statusOrder.forEach((sKey, idx) => {
+            if (idx > currentIdx) return;
+            const sInfo = statusConfig[sKey];
+            const label = sInfo[type] ? sInfo[type].label : sInfo.label;
+            const item = document.createElement('div');
+            item.className = 'tl-item animate-in';
+            item.innerHTML = `
+                <div class="tl-dot">${idx === currentIdx ? '●' : '✓'}</div>
+                <div class="tl-content">
+                    <div class="tl-label">${label}</div>
+                    <div class="tl-time">${idx === currentIdx ? 'آخر تحديث الآن' : 'مرحلة مكتملة'}</div>
+                </div>
+            `;
+            elements.timelineItems.appendChild(item);
+        });
+
+        resultContent.classList.remove('hidden');
+        resultContent.classList.add('animate-in');
+    }
+
+    // استخدام Event Delegation لضمان عمل الزر حتى لو تكرر العنصر أو تأخر في التحميل
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('#track-btn') || e.target.closest('.track-btn');
+        if (btn) {
+            e.preventDefault();
+            handleTrack();
+        }
+    });
+
+    // التعرف على ضغطة Enter في حقل الإدخال
+    document.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && e.target.id === 'order-input') {
+            e.preventDefault();
+            handleTrack();
+        }
+    });
+})();
+</script>

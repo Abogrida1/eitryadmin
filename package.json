@@ -1,0 +1,25 @@
+{
+  "name": "shopify-tracking-admin",
+  "version": "1.0.0",
+  "description": "Shopify Order Tracking System on Vercel",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.39.8",
+    "next": "14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.20",
+    "@types/react": "^18.2.58",
+    "@types/react-dom": "^18.2.19",
+    "typescript": "^5.3.3"
+  }
+}
